@@ -1,0 +1,268 @@
+[gd_scene load_steps=10 format=3 uid="uid://battle_jianghu"]
+
+[ext_resource type="Script" path="res://scripts/battle_setup.gd" id="1_setup"]
+[ext_resource type="PackedScene" uid="uid://player_jianghu" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://enemy_base_jianghu" path="res://scenes/enemy_base.tscn" id="3_enemy"]
+[ext_resource type="PackedScene" uid="uid://projectile_jianghu" path="res://scenes/projectile.tscn" id="4_proj"]
+[ext_resource type="Script" path="res://scripts/enemies/spawner.gd" id="5_spawner"]
+[ext_resource type="Script" path="res://scripts/wave/wave_controller.gd" id="6_wave"]
+[ext_resource type="Script" path="res://scripts/equipment/equipment_manager.gd" id="7_eqmgr"]
+[ext_resource type="Script" path="res://scripts/skills/skill_manager.gd" id="8_skmgr"]
+[ext_resource type="Script" path="res://scripts/projectiles/projectile_pool.gd" id="9_projpool"]
+
+[node name="Battle" type="Node2D"]
+script = ExtResource("1_setup")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(480, 320)
+
+[node name="EnemySpawner" type="Node" parent="."]
+script = ExtResource("5_spawner")
+enemy_scene = ExtResource("3_enemy")
+spawn_margin = 300.0
+max_enemies = 30
+
+[node name="WaveController" type="Node" parent="."]
+script = ExtResource("6_wave")
+base_enemy_scene = ExtResource("3_enemy")
+elite_enemy_scene = ExtResource("3_enemy")
+boss_enemy_scene = ExtResource("3_enemy")
+
+[node name="ProjectilePool" type="Node" parent="."]
+script = ExtResource("9_projpool")
+projectile_scene = ExtResource("4_proj")
+
+[node name="EquipmentManager" type="Node" parent="."]
+script = ExtResource("7_eqmgr")
+
+[node name="SkillManager" type="Node" parent="."]
+script = ExtResource("8_skmgr")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("res://scripts/ui/hud.gd")
+
+[node name="HealthBar" type="ProgressBar" parent="HUD"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 220.0
+offset_bottom = 40.0
+max_value = 100.0
+value = 100.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_red")
+theme_override_styles/background = SubResource("StyleBoxFlat_bg")
+
+[node name="ExpBar" type="ProgressBar" parent="HUD"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 45.0
+offset_right = 220.0
+offset_bottom = 60.0
+max_value = 20.0
+value = 0.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_blue")
+theme_override_styles/background = SubResource("StyleBoxFlat_bg")
+
+[node name="WaveLabel" type="Label" parent="HUD"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 65.0
+offset_right = 200.0
+offset_bottom = 85.0
+text = "第 0 波"
+
+[node name="EnemyCountLabel" type="Label" parent="HUD"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 88.0
+offset_right = 200.0
+offset_bottom = 108.0
+text = "剩余: 0"
+
+[node name="WaveTimerLabel" type="Label" parent="HUD"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -120.0
+offset_right = 100.0
+offset_bottom = -80.0
+text = ""
+horizontal_alignment = 1
+visible = false
+theme_override_font_sizes/font_size = 36
+
+[node name="UpgradePopup" type="Control" parent="HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+visible = false
+script = ExtResource("res://scripts/ui/upgrade_popup.gd")
+
+[node name="Panel" type="Panel" parent="HUD/UpgradePopup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -120.0
+offset_right = 200.0
+offset_bottom = 120.0
+
+[node name="Title" type="Label" parent="HUD/UpgradePopup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -110.0
+offset_right = 100.0
+offset_bottom = -80.0
+text = "选择强化"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+
+[node name="OptionsContainer" type="HBoxContainer" parent="HUD/UpgradePopup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -60.0
+offset_right = 180.0
+offset_bottom = 100.0
+
+[node name="Option1" type="VBoxContainer" parent="HUD/UpgradePopup/OptionsContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="HUD/UpgradePopup/OptionsContainer/Option1"]
+layout_mode = 2
+text = "Option 1"
+
+[node name="Label" type="Label" parent="HUD/UpgradePopup/OptionsContainer/Option1"]
+layout_mode = 2
+text = "Desc"
+
+[node name="Option2" type="VBoxContainer" parent="HUD/UpgradePopup/OptionsContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="HUD/UpgradePopup/OptionsContainer/Option2"]
+layout_mode = 2
+text = "Option 2"
+
+[node name="Label" type="Label" parent="HUD/UpgradePopup/OptionsContainer/Option2"]
+layout_mode = 2
+text = "Desc"
+
+[node name="Option3" type="VBoxContainer" parent="HUD/UpgradePopup/OptionsContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="HUD/UpgradePopup/OptionsContainer/Option3"]
+layout_mode = 2
+text = "Option 3"
+
+[node name="Label" type="Label" parent="HUD/UpgradePopup/OptionsContainer/Option3"]
+layout_mode = 2
+text = "Desc"
+
+[node name="GameOverScreen" type="Control" parent="HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+visible = false
+script = ExtResource("res://scripts/ui/game_over_screen.gd")
+
+[node name="Panel" type="Panel" parent="HUD/GameOverScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -120.0
+offset_right = 180.0
+offset_bottom = 120.0
+
+[node name="ResultLabel" type="Label" parent="HUD/GameOverScreen/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 10.0
+offset_right = 80.0
+offset_bottom = 40.0
+text = "虽败犹荣"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+
+[node name="WaveLabel" type="Label" parent="HUD/GameOverScreen/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 50.0
+offset_right = 80.0
+offset_bottom = 70.0
+text = "存活到第 0 波"
+horizontal_alignment = 1
+
+[node name="CoinReward" type="Label" parent="HUD/GameOverScreen/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 80.0
+offset_right = 80.0
+offset_bottom = 100.0
+text = "获得铜钱: 0"
+horizontal_alignment = 1
+
+[node name="CultReward" type="Label" parent="HUD/GameOverScreen/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 110.0
+offset_right = 80.0
+offset_bottom = 130.0
+text = "获得修为: 0"
+horizontal_alignment = 1
+
+[node name="ReturnButton" type="Button" parent="HUD/GameOverScreen/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.0
+offset_top = 150.0
+offset_right = 60.0
+offset_bottom = 190.0
+text = "返回江湖"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(480, 320)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_red"]
+bg_color = Color(0.8, 0.2, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_blue"]
+bg_color = Color(0.2, 0.4, 0.9, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.2, 0.2, 0.2, 0.8)

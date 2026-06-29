@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillResource" load_steps=2 format=3 uid="uid://bloodthirst_sk"]
+
+[ext_resource type="Script" path="res://scripts/skills/skill_resource.gd" id="1_sk"]
+
+[resource]
+script = ExtResource("1_sk")
+id = "bloodthirst"
+display_name = "嗜血"
+type = 1
+cooldown = 0.0
+description = "击杀敌人回复5点生命"
+passive_trigger = 1
+buff_type = "heal"
+buff_value = 5.0

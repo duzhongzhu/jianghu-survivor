@@ -1,0 +1,8 @@
+[gd_resource type="Environment" load_steps=2 format=3 uid="uid://default_env_jianghu"]
+
+[sub_resource type="Sky" id="Sky_default"]
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_default")
+ambient_light_color = Color(0.3, 0.3, 0.35, 1)

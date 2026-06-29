@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=2 format=3 uid="uid://assassin_en"]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_resource.gd" id="1_en"]
+
+[resource]
+script = ExtResource("1_en")
+id = "assassin"
+display_name = "刺客"
+max_health = 20.0
+move_speed = 100.0
+damage = 20.0
+exp_drop = 25
+behavior = "dash"
+dash_speed = 300.0
+dash_interval = 3.0
+is_elite = true
+is_boss = false
+scale_mult = 1.5

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SkillResource" load_steps=2 format=3 uid="uid://shadow_step_sk"]
+
+[ext_resource type="Script" path="res://scripts/skills/skill_resource.gd" id="1_sk"]
+
+[resource]
+script = ExtResource("1_sk")
+id = "shadow_step"
+display_name = "影步"
+type = 0
+cooldown = 8.0
+description = "向移动方向闪现一段距离"
+damage_mult = 0.0
+range = 150.0
+shape = "none"
+pierce = false

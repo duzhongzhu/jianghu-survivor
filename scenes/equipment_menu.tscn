@@ -1,0 +1,91 @@
+[gd_scene load_steps=2 format=3 uid="uid://equipment_menu_jianghu"]
+
+[ext_resource type="Script" path="res://scripts/ui/equipment_menu.gd" id="1_eq_menu"]
+
+[node name="EquipmentMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_eq_menu")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 30.0
+offset_right = 100.0
+offset_bottom = 70.0
+text = "装备配置"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 32
+
+[node name="CopperLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 80.0
+offset_right = 100.0
+offset_bottom = 110.0
+text = "铜钱: 0  修为: 0"
+horizontal_alignment = 1
+
+[node name="WeaponLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 140.0
+offset_right = 200.0
+offset_bottom = 170.0
+text = "-- 武器 --"
+
+[node name="WeaponList" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 175.0
+offset_right = 400.0
+offset_bottom = 280.0
+
+[node name="ArmorLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 300.0
+offset_right = 200.0
+offset_bottom = 330.0
+text = "-- 护甲 --"
+
+[node name="ArmorList" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 335.0
+offset_right = 400.0
+offset_bottom = 440.0
+
+[node name="AccessoryLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 460.0
+offset_right = 200.0
+offset_bottom = 490.0
+text = "-- 饰品 --"
+
+[node name="AccessoryList" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 495.0
+offset_right = 400.0
+offset_bottom = 560.0
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.0
+offset_top = 580.0
+offset_right = 60.0
+offset_bottom = 620.0
+text = "返回"

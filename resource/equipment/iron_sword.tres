@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EquipmentResource" load_steps=2 format=3 uid="uid://iron_sword_eq"]
+
+[ext_resource type="Script" path="res://scripts/equipment/equipment_resource.gd" id="1_eq"]
+
+[resource]
+script = ExtResource("1_eq")
+id = "iron_sword"
+display_name = "铁剑"
+slot = 0
+attack = 15.0
+health = 0.0
+defense = 0.0
+attack_range = 80.0
+attack_speed = 1.0
+attack_type = 0
+price = 100
+description = "寻常铁剑，武林新手的启蒙兵器"

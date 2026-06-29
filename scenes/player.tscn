@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://player_jianghu"]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 1
+script = ExtResource("1_player")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 0)
+scale = Vector2(1, 1)
+texture = preload("res://icon.svg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_player")
+
+[node name="AttackRange" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+shape = SubResource("CircleShape2D_attack")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_player"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_attack"]
+radius = 100.0

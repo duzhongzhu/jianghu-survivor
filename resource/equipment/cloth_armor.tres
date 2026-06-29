@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EquipmentResource" load_steps=2 format=3 uid="uid://cloth_armor_eq"]
+
+[ext_resource type="Script" path="res://scripts/equipment/equipment_resource.gd" id="1_eq"]
+
+[resource]
+script = ExtResource("1_eq")
+id = "cloth_armor"
+display_name = "布衣"
+slot = 1
+attack = 0.0
+health = 30.0
+defense = 5.0
+attack_range = 0.0
+attack_speed = 0.0
+attack_type = 0
+price = 80
+description = "粗布所制，聊胜于无"

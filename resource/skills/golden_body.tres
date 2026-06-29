@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SkillResource" load_steps=2 format=3 uid="uid://golden_body_sk"]
+
+[ext_resource type="Script" path="res://scripts/skills/skill_resource.gd" id="1_sk"]
+
+[resource]
+script = ExtResource("1_sk")
+id = "golden_body"
+display_name = "金钟罩"
+type = 1
+cooldown = 0.0
+description = "每15秒获得3秒无敌"
+passive_trigger = 0
+trigger_interval = 15.0
+buff_type = "invincible"
+buff_duration = 3.0

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SkillResource" load_steps=2 format=3 uid="uid://sword_wave_sk"]
+
+[ext_resource type="Script" path="res://scripts/skills/skill_resource.gd" id="1_sk"]
+
+[resource]
+script = ExtResource("1_sk")
+id = "sword_wave"
+display_name = "剑气斩"
+type = 0
+cooldown = 5.0
+description = "向前方释放一道剑气，穿透敌人"
+damage_mult = 2.5
+range = 200.0
+shape = "line"
+pierce = true
