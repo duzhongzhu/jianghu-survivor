@@ -1,7 +1,4 @@
 extends Node
-class_name SaveManager
-
-static var instance: SaveManager
 
 var copper_coins: int = 0
 var cultivation: int = 0
@@ -13,7 +10,6 @@ var equipped_accessory_id: String = ""
 const SAVE_PATH: String = "user://save_data.json"
 
 func _ready() -> void:
-	instance = self
 	load_game()
 
 func load_game() -> void:
@@ -29,7 +25,7 @@ func load_game() -> void:
 		return
 	copper_coins = data.get("copper_coins", 0)
 	cultivation = data.get("cultivation", 0)
-	owned_equipment_ids = data.get("owned_equipment_ids", [])
+	owned_equipment_ids.assign(data.get("owned_equipment_ids", []))
 	equipped_weapon_id = data.get("equipped_weapon_id", "")
 	equipped_armor_id = data.get("equipped_armor_id", "")
 	equipped_accessory_id = data.get("equipped_accessory_id", "")

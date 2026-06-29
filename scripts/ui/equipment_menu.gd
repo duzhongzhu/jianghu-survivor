@@ -25,9 +25,9 @@ func _load_equipment_catalog() -> void:
 func _refresh_ui() -> void:
 	var coins: int = 0
 	var cult: int = 0
-	if SaveManager.instance:
-		coins = SaveManager.instance.copper_coins
-		cult = SaveManager.instance.cultivation
+	if SaveManager:
+		coins = SaveManager.copper_coins
+		cult = SaveManager.cultivation
 	$CopperLabel.text = "铜钱: %d  修为: %d" % [coins, cult]
 
 	# 清空旧列表
@@ -50,18 +50,18 @@ func _refresh_ui() -> void:
 			slot_container.add_child(btn)
 
 func _buy_equipment(eq: EquipmentResource) -> void:
-	if not SaveManager.instance:
+	if not SaveManager:
 		return
-	if SaveManager.instance.copper_coins < eq.price:
+	if SaveManager.copper_coins < eq.price:
 		return
-	SaveManager.instance.copper_coins -= eq.price
-	SaveManager.instance.owned_equipment_ids.append(eq.id)
-	SaveManager.instance.save_game()
+	SaveManager.copper_coins -= eq.price
+	SaveManager.owned_equipment_ids.append(eq.id)
+	SaveManager.save_game()
 	# 如果是武器则装备
 	if eq.slot == EquipmentResource.Slot.WEAPON:
-		SaveManager.instance.equipped_weapon_id = eq.id
+		SaveManager.equipped_weapon_id = eq.id
 	elif eq.slot == EquipmentResource.Slot.ARMOR:
-		SaveManager.instance.equipped_armor_id = eq.id
+		SaveManager.equipped_armor_id = eq.id
 	elif eq.slot == EquipmentResource.Slot.ACCESSORY:
-		SaveManager.instance.equipped_accessory_id = eq.id
+		SaveManager.equipped_accessory_id = eq.id
 	_refresh_ui()

@@ -8,6 +8,9 @@ var pierce: bool = false
 var hit_enemies: Array[Enemy] = []
 var _age: float = 0.0
 
+func _ready() -> void:
+	body_entered.connect(_on_body_entered)
+
 func _physics_process(delta: float) -> void:
 	position += velocity * delta
 	_age += delta
@@ -21,7 +24,7 @@ func launch(from: Vector2, direction: Vector2, speed: float, dmg: float, do_pier
 	pierce = do_pierce
 	hit_enemies.clear()
 	_age = 0.0
-	monitoring = true
+	set_deferred("monitoring", true)
 	visible = true
 
 func _on_body_entered(body: Node2D) -> void:
@@ -34,7 +37,7 @@ func _on_body_entered(body: Node2D) -> void:
 			_return_to_pool()
 
 func _return_to_pool() -> void:
-	monitoring = false
+	set_deferred("monitoring", false)
 	visible = false
 	if ProjectilePool.instance:
 		ProjectilePool.instance.return_to_pool(self)

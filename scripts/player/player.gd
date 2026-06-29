@@ -15,6 +15,14 @@ var enemies_in_range: Array[Node2D] = []
 var nearest_enemy: Node2D = null
 var attack_timer: float = 0.0
 
+# 精灵动画
+var _anim_frame: int = 0
+var _anim_timer: float = 0.0
+var _anim_speed: float = 0.12
+var _facing_row: int = 0  # 0=前 1=左 2=右 3=后
+const FRAME_W: int = 48
+const FRAME_H: int = 48
+
 # 经验系统
 var current_exp: int = 0
 var exp_to_next_level: int = 20
@@ -37,9 +45,24 @@ func _physics_process(delta: float) -> void:
 	velocity = input_dir * move_speed
 	move_and_slide()
 
-	# 面朝方向
-	if velocity.length_squared() > 1.0:
-		rotation = velocity.angle()
+	# 精灵方向（不旋转，改切 spritesheet 行）
+	if abs(velocity.x) > abs(velocity.y):
+		_facing_row = 2 if velocity.x > 10 else 1  # 右 / 左
+	else:
+		_facing_row = 3 if velocity.y < -10 else 0  # 后 / 前
+
+	# 动画帧更新
+	var is_moving: bool = velocity.length_squared() > 1.0
+	if is_moving:
+		_anim_timer -= delta
+		if _anim_timer <= 0.0:
+			_anim_timer = _anim_speed
+			_anim_frame = (_anim_frame + 1) % 3
+	else:
+		_anim_frame = 1  # 站立时用中间帧
+		_anim_timer = 0.0
+
+	$Sprite2D.region_rect = Rect2(_anim_frame * FRAME_W, _facing_row * FRAME_H, FRAME_W, FRAME_H)
 
 	# 自动普攻
 	_update_nearest_enemy()
@@ -97,7 +120,7 @@ func _perform_melee_arc() -> void:
 	for enemy in enemies_in_range:
 		if is_instance_valid(enemy):
 			var to_enemy: Vector2 = enemy.global_position - global_position
-			var forward: Vector2 = Vector2.RIGHT.rotated(rotation)
+			var forward: Vector2 = _get_facing_direction()
 			if to_enemy.normalized().dot(forward) > cos(deg_to_rad(60)):
 				enemy.take_damage(attack_damage)
 
@@ -138,6 +161,9 @@ func take_damage(amount: float) -> void:
 		defense = equipment_manager.get_total_defense()
 	var actual_damage: float = maxf(1.0, amount - defense * 0.5)
 	current_health -= actual_damage
+	# 死亡前刷新 HUD，确保显示归零
+	if hud:
+		hud.update_health(maxf(0, current_health), max_health)
 	if current_health <= 0:
 		die()
 
@@ -154,5 +180,13 @@ func die() -> void:
 	player_died.emit()
 	get_tree().paused = true
 
+func _get_facing_direction() -> Vector2:
+	match _facing_row:
+		0: return Vector2.DOWN
+		1: return Vector2.LEFT
+		2: return Vector2.RIGHT
+		3: return Vector2.UP
+	return Vector2.DOWN
+
 func get_move_direction() -> Vector2:
-	return velocity.normalized() if velocity.length_squared() > 1.0 else Vector2.RIGHT
+	return _get_facing_direction()

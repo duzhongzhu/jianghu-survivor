@@ -29,9 +29,7 @@ func _ready() -> void:
 	$WaveController.start_first_wave()
 
 func _load_equipped_gear() -> void:
-	if not SaveManager.instance:
-		return
-	var sm = SaveManager.instance
+	var sm = SaveManager
 	# 加载已装备的武器
 	if sm.equipped_weapon_id != "":
 		var path = "res://resource/equipment/%s.tres" % sm.equipped_weapon_id

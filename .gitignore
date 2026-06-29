@@ -1,3 +1,5 @@
 .superpowers/
 *.tmp
 *.log
+.godot/
+*.uid

@@ -14,16 +14,28 @@ var current_health: float
 var attack_timer: float = 0.0
 var player_ref: Player = null
 
+# 精灵动画
+var _anim_frame: int = 0
+var _anim_timer: float = 0.0
+var _anim_speed: float = 0.15
+var _facing_row: int = 0
+const FRAME_W: int = 48
+const FRAME_H: int = 48
+
 func _ready() -> void:
 	if resource:
 		max_health = resource.max_health
 		move_speed = resource.move_speed
 		damage = resource.damage
 		exp_drop = resource.exp_drop
-		if resource.is_elite or resource.is_boss:
+		if resource.is_elite:
 			scale = Vector2.ONE * resource.scale_mult
-			max_health *= 3.0 if resource.is_elite else 10.0
-			exp_drop *= 3 if resource.is_elite else 10
+			max_health *= 3.0
+			exp_drop *= 3
+		elif resource.is_boss:
+			scale = Vector2.ONE * resource.scale_mult
+			max_health *= 10.0
+			exp_drop *= 10
 
 	current_health = max_health
 
@@ -44,6 +56,20 @@ func _physics_process(delta: float) -> void:
 	var dir: Vector2 = (player_ref.global_position - global_position).normalized()
 	velocity = dir * move_speed
 	move_and_slide()
+
+	# 精灵方向（朝玩家方向）
+	if abs(dir.x) > abs(dir.y):
+		_facing_row = 2 if dir.x > 0.3 else 1  # 右 / 左
+	else:
+		_facing_row = 3 if dir.y < -0.3 else 0  # 后 / 前
+
+	# 动画帧
+	_anim_timer -= delta
+	if _anim_timer <= 0.0:
+		_anim_timer = _anim_speed
+		_anim_frame = (_anim_frame + 1) % 3
+
+	$Sprite2D.region_rect = Rect2(_anim_frame * FRAME_W, _facing_row * FRAME_H, FRAME_W, FRAME_H)
 
 	# 碰撞攻击玩家
 	attack_timer -= delta

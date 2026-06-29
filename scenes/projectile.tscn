@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://projectile_jianghu"]
+[gd_scene load_steps=3 format=3 uid="uid://projectile_jianghu"]
 
 [ext_resource type="Script" path="res://scripts/projectiles/projectile.gd" id="1_proj"]
+[ext_resource type="Texture2D" path="res://assets/projectile.png" id="2_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_proj"]
+size = Vector2(8, 4)
 
 [node name="Projectile" type="Area2D"]
 collision_layer = 4
@@ -8,10 +12,8 @@ collision_mask = 2
 script = ExtResource("1_proj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(3, 3)
+texture = ExtResource("2_texture")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_proj")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_proj"]
-size = Vector2(8, 4)
